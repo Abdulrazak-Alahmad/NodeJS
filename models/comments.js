@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema =mongoose.Schema;
+const Post= require('./post')
 const commentSchema = new Schema({
     text: {
         type: String,
@@ -9,9 +10,8 @@ const commentSchema = new Schema({
 
     // each comment can only relates to one blog, so it's not in array
     post: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Blog'
+        type: Schema.Types.ObjectId,
+        ref: Post
     }
 })
-
 module.exports = mongoose.model('Comment', commentSchema);

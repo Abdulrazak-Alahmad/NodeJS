@@ -1,0 +1,24 @@
+
+<html lang="en">
+    <%- include('./partials/head.ejs')   %>
+    <body>
+
+        <%- include('./partials/nav.ejs')   %>
+        <div class="create-post container">
+
+        <a class="editPost" href="/posts/<%= post._id %>">Go Back....</a>
+        
+
+        <form action="/posts/confirm-edit?post_id=<%= post._id %>" method="POST">
+   
+            <label for="title">User Name:</label>
+            <input type="text"  name="snippet" id="snippet" required value="<%= post.snippet %>">
+            <label for="title">Message</label>
+            <textarea name="body" id="body" cols="30" rows="10"><%= post.body %></textarea>
+            <button> Submit </button>
+        </form>
+    </div>
+        <%- include('./partials/footer.ejs')   %>
+    
+    </body>
+</html>

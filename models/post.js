@@ -1,7 +1,6 @@
 const mongoose= require('mongoose');
 const Schema =mongoose.Schema;
-
-const blogSchema = new Schema({
+const postSchema = new Schema({
 
 snippet: {
     type : String,
@@ -16,9 +15,10 @@ comments: [{
     ref: 'Comment'
   }]
 },{timestamps:true});
-blogSchema.virtual('url').get(function(){
-    return '/blogs/' + this._id
+
+postSchema.virtual('url').get(function(){
+    return '/posts/' + this._id
  })
  
-const Blog = mongoose.model('Blog',blogSchema);
-module.exports=Blog;
+const Post = mongoose.model('post',postSchema);
+module.exports=Post;

@@ -1,65 +1,66 @@
-
 <html lang="en">
-    <%- include('./partials/head.ejs')   %>
-<body>
-    
-    <%- include('./partials/nav.ejs')   %>
-    <div class="details container">
-        <div class="content">
-            <table style="width:80%">
-                <tr>
-                  <th><h3 ><%= blog.snippet%> ||</h3></th>
-                 
-                  
-                </tr>
-                <tr>
-                  <td><p><%= blog.body%></p></td>
-                  
-                </tr>
-                <tr>
-                    <td><p><%= blog.comments%></p></td>
-                    
-                    
-                  </tr>
-                <tr>
-                    <td><textarea name="text" id="text" cols="100" rows="10"></textarea>
-                        <a class="comment" data-doc="<%=blog._id%>" >comment</a>
-                    </td>
-                   
-                  </tr>
-              </table>
+<%- include('./partials/head.ejs') %>
 
-        </div>
-        <a class="delete" data-doc="<%=blog._id%>" >Delete</a>
+    <body>
+        <%- include('./partials/nav.ejs') %>
+            <div class="details container">
+                <div class="content">
+                    <% var date=post.updatedAt; 
+                    var dd=String(date.getDate()).padStart(2, '0' ); 
+                    var mm=String(date.getMonth() + 1).padStart(2, '0' ); 
+                    var yyyy=date.getFullYear();
+                    date=mm + '/' + dd + '/' + yyyy; %>
+                        <table style="width:80%">
+                            <form action="/posts/edit-post?post_id=<%= post._id %>" method="POST">
+                                <tr>
+                                    <th>
+                                        <h3>
+                                            <%= post.snippet%> || <%= date%>
+                                        </h3>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>
+                                            <%= post.body%>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>
+                                            <%= post.comments%>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <button class="editPost">Edit</button>
+                            </form>
+                            <tr>
+                                <form action="/posts/comment/post_id=<%= post._id %>" method="POST">
+                                    <td><textarea name="text" id="text" cols="100" rows="10"><%=post._id%></textarea>
+                                        <!-- <input type="text" name="post_id" id="post_id" value='<%=post._id%>'> -->
+                                        <button class="comment" data-doc="<%=post._id%>">comment</button>
+                                    </td>
+                                </form>
+                            </tr>
+                        </table>
+                </div>
+                <a class="delete" data-doc="<%=post._id%>">Delete</a>
+            </div>
+            <%- include('./partials/footer.ejs') %>
+                <script>
+                    const del = document.querySelector('a.delete');
+                    del.addEventListener('click', (e) => {
+                        console.log(del.dataset.doc);
+                        const endpoint = `/posts/${del.dataset.doc}`;
+                        fetch(endpoint, {
+                            method: 'DELETE'
+                        })
+                            .then((response) => response.json())
+                            .then((data) => window.location.href = data.redirect)
+                            .catch(err => console.log(err));
+                    })
+                </script>
+    </body>
 
-    </div>
-    
-
-    <%- include('./partials/footer.ejs') %>
-    <script>
-        
-        const del = document.querySelector('a.delete');
-        del.addEventListener('click',(e)=>{
-            console.log(del.dataset.doc);
-            
-            const endpoint = `/blogs/${del.dataset.doc}`;
-            fetch(endpoint,{
-                method:'DELETE'
-            })
-            .then((response)=> response.json())
-            .then((data)=>window.location.href=data.redirect)
-            .catch(err=>console.log(err));
-        })
-        const com = document.querySelector('a.comment');
-        com.addEventListener('click',(e)=>{
-            const endpoint1 = `/blogs/comment/${del.dataset.doc}`;
-            fetch(endpoint1,{
-                method:'POST'
-            })
-            .then((response)=> response.json())
-            .then((data)=>window.location.href=data.redirect)
-            .catch(err=>console.log(err));
-        })
-    </script>
-</body>
 </html>

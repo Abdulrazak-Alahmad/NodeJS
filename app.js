@@ -13,10 +13,10 @@ mongoose.connect(dbURL)
     }).catch((err) => {
     });
 app.get('/', (req, res) => {
-    res.redirect('/blogs')
+    res.redirect('/posts')
 });
 
-app.use('/blogs', router)
+app.use('/posts', router)
 
 app.get('/create', (req, res) => {
     res.render('create')
