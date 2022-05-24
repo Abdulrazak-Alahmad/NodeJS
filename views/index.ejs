@@ -1,0 +1,48 @@
+
+<html lang="en">
+    <%- include('./partials/head.ejs')   %>
+<body>
+
+    <%- include('./partials/nav.ejs')   %>
+<div class="blogs container">
+<h1>All Messages</h1>
+
+    <% 
+    
+    if (blogs.length > 0){  blogs.forEach(blog=>{ %>
+        <% var date =blog.createdAt;    
+        var dd = String(date.getDate()).padStart(2, '0');
+       var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+       var yyyy = date.getFullYear();
+       date = mm + '/' + dd + '/' + yyyy;
+        
+       
+       %>
+    <a class="single" href="/blogs/<%=blog._id %>" >
+
+        <table style="width:100%">
+            <tr>
+              <th><h3 ><%= blog.snippet%> || <%= date%></h3></th>
+             
+              
+            </tr>
+            <tr>
+              <td><p><%= blog.body%></p></td>
+              
+            </tr>
+            <tr>
+              <td><p><%= blog.comments%></p></td>
+              
+            </tr>
+          </table>
+</a>
+
+<%
+}) }%>
+
+
+
+</div>
+<%- include('./partials/footer.ejs')   %>
+</body>
+</html>

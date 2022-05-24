@@ -1,0 +1,65 @@
+
+<html lang="en">
+    <%- include('./partials/head.ejs')   %>
+<body>
+    
+    <%- include('./partials/nav.ejs')   %>
+    <div class="details container">
+        <div class="content">
+            <table style="width:80%">
+                <tr>
+                  <th><h3 ><%= blog.snippet%> ||</h3></th>
+                 
+                  
+                </tr>
+                <tr>
+                  <td><p><%= blog.body%></p></td>
+                  
+                </tr>
+                <tr>
+                    <td><p><%= blog.comments%></p></td>
+                    
+                    
+                  </tr>
+                <tr>
+                    <td><textarea name="text" id="text" cols="100" rows="10"></textarea>
+                        <a class="comment" data-doc="<%=blog._id%>" >comment</a>
+                    </td>
+                   
+                  </tr>
+              </table>
+
+        </div>
+        <a class="delete" data-doc="<%=blog._id%>" >Delete</a>
+
+    </div>
+    
+
+    <%- include('./partials/footer.ejs') %>
+    <script>
+        
+        const del = document.querySelector('a.delete');
+        del.addEventListener('click',(e)=>{
+            console.log(del.dataset.doc);
+            
+            const endpoint = `/blogs/${del.dataset.doc}`;
+            fetch(endpoint,{
+                method:'DELETE'
+            })
+            .then((response)=> response.json())
+            .then((data)=>window.location.href=data.redirect)
+            .catch(err=>console.log(err));
+        })
+        const com = document.querySelector('a.comment');
+        com.addEventListener('click',(e)=>{
+            const endpoint1 = `/blogs/comment/${del.dataset.doc}`;
+            fetch(endpoint1,{
+                method:'POST'
+            })
+            .then((response)=> response.json())
+            .then((data)=>window.location.href=data.redirect)
+            .catch(err=>console.log(err));
+        })
+    </script>
+</body>
+</html>
