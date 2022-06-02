@@ -1,15 +1,12 @@
 <html lang="en">
 <%- include('./partials/head.ejs') %>
-
     <body>
         <%- include('./partials/nav.ejs') %>
             <div class="details container">
                 <div class="content">
-                    <% var date=post.updatedAt; 
-                    var dd=String(date.getDate()).padStart(2, '0' ); 
-                    var mm=String(date.getMonth() + 1).padStart(2, '0' ); 
-                    var yyyy=date.getFullYear();
-                    date=mm + '/' + dd + '/' + yyyy; %>
+                    <% console.log('post'); console.log(post); console.log('post'); var date=post.updatedAt; var
+                        dd=String(date.getDate()).padStart(2, '0' ); var mm=String(date.getMonth() + 1).padStart(2, '0'
+                        ); var yyyy=date.getFullYear(); date=mm + '/' + dd + '/' + yyyy; %>
                         <table style="width:80%">
                             <form action="/posts/edit-post?post_id=<%= post._id %>" method="POST">
                                 <tr>
@@ -21,31 +18,36 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <p>
+                                        <h4>
                                             <%= post.body%>
-                                        </p>
+                                        </h4>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <p>
-                                            <%= post.comments%>
-                                        </p>
+                                        <% if (answers.length> 0){ answers.forEach(answer=>{ %>
+                                            <p>
+                                                <%= answer.text %>
+                                            </p>
+                                            <hr>
+                                            <%})} %>
                                     </td>
                                 </tr>
-                                <button class="editPost">Edit</button>
+                                <%if(postid){ %> <button class="editPost">Edit</button>
+                                    <%}%>
                             </form>
                             <tr>
-                                <form action="/posts/comment/post_id=<%= post._id %>" method="POST">
-                                    <td><textarea name="text" id="text" cols="100" rows="10"><%=post._id%></textarea>
-                                        <!-- <input type="text" name="post_id" id="post_id" value='<%=post._id%>'> -->
+                                <form action="/posts/comment/<%= post._id %>" method="POST">
+                                    <td><textarea name="text" id="text" cols="100" rows="10"></textarea>
                                         <button class="comment" data-doc="<%=post._id%>">comment</button>
                                     </td>
                                 </form>
                             </tr>
                         </table>
                 </div>
-                <a class="delete" data-doc="<%=post._id%>">Delete</a>
+                <%if(postid){ %>
+                    <a class="delete" data-doc="<%=post._id%>">Delete</a>
+                    <%}%>
             </div>
             <%- include('./partials/footer.ejs') %>
                 <script>
@@ -62,5 +64,4 @@
                     })
                 </script>
     </body>
-
 </html>

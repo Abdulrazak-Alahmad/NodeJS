@@ -14,5 +14,4 @@ router.delete('/:id',controller.post_delete)
 
 router.post('/', controller.post_create_post)
 
-
 module.exports=router;

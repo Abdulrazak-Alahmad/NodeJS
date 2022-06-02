@@ -8,17 +8,15 @@ snippet: {
 },
 body: {
     type : String,
-    required: true}
-,
-comments: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Comment'
-  }]
+    required: true
+}
+
 },{timestamps:true});
 
-postSchema.virtual('url').get(function(){
-    return '/posts/' + this._id
- })
+// postSchema.virtual('url').get(function(){
+//     return '/posts/' + this._id
+//  })
  
 const Post = mongoose.model('post',postSchema);
 module.exports=Post;
+

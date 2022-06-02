@@ -6,10 +6,10 @@ const router=  require('./routes/router')
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }))
-const dbURL = "mongodb+srv://abd1:1234@cluster0.ovmjb.mongodb.net/node-tuts?retryWrites=true&w=majority";
+const dbURL = "mongodb+srv://abd1:1234@cluster0.ovmjb.mongodb.net/node-tuts123?retryWrites=true&w=majority";
 mongoose.connect(dbURL)
     .then((result) => { 
-        app.listen(3000);
+        app.listen(4000);
     }).catch((err) => {
     });
 app.get('/', (req, res) => {

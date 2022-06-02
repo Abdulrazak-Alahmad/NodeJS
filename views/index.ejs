@@ -10,28 +10,28 @@
     <% 
     
     if (posts.length > 0){  posts.forEach(post=>{ %>
-        <% var date =post.updatedAt;    
+        <% var date =post.post.updatedAt;    
         var dd = String(date.getDate()).padStart(2, '0');
        var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
        var yyyy = date.getFullYear();
        date = mm + '/' + dd + '/' + yyyy;
        %>
-    <a class="single" href="/posts/<%=post._id %>" >
+    <a class="single" href="/posts/<%=post.post._id %>" >
 
         <table style="width:100%">
             <tr>
-              <th><h3 ><%= post.snippet%> || <%= date%></h3></th>
+              <th><h3 ><%= post.post.snippet%> || <%= date%></h3></th>
              
               
             </tr>
             <tr>
-              <td><p><%= post.body%></p></td>
+              <td><p><%= post.post.body%></p></td>
               
             </tr>
-            <tr>
+            <!-- <tr>
               <td><p><%= post.comments%></p></td>
               
-            </tr>
+            </tr> -->
           </table>
 </a>
 
